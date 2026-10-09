@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101113">
+  <title>Apex / Racing Dashboard</title>
+  <style>
+:root{color-scheme:dark;--bg:#101113;--panel:#17181b;--red:#ff3a42;--muted:#777b83;--white:#eef0f3;--green:#89dfb0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 48% 40%,#222327 0%,#101113 67%);color:var(--white);font-family:Arial,Helvetica,sans-serif;min-height:100vh}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:2px solid var(--white);outline-offset:5px}.cockpit{max-width:1440px;margin:auto;padding:36px 58px 24px}.topbar{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2b2c30;padding-bottom:26px}.brand{text-decoration:none;color:var(--white);font-weight:900;font-size:27px;letter-spacing:5px;position:relative;padding-left:47px}.brand-mark{position:absolute;left:0;color:var(--red);letter-spacing:-6px;font-style:italic;font-size:32px}.brand-sub{display:block;font-size:7px;letter-spacing:2.4px;margin-top:5px}.session{display:flex;align-items:center;gap:12px;font-size:9px;letter-spacing:1.7px;color:#a1a4ab}.live-dot,.green-dot{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 10px #89dfb033}.live-dot{background:var(--red);box-shadow:0 0 10px #ff3a4255}.session-line{width:1px;height:15px;background:#36373b;margin:0 10px}.sound-button{background:transparent;color:#a1a4ab;border:1px solid #35363c;border-radius:5px;padding:10px 13px;font-size:9px;letter-spacing:1.5px}.sound-button span{margin-left:10px;font-size:14px}.sound-button[aria-pressed=false]{color:var(--red);border-color:#ff3a4266}.intro{display:flex;justify-content:space-between;align-items:end;padding:39px 0 29px}.eyebrow{color:#8a8d95;font-size:9px;letter-spacing:2px;margin:0 0 14px}.eyebrow span{color:#555961;margin-left:15px}h1{font-size:34px;letter-spacing:-1.4px;margin:0;font-weight:600}h1 em{color:var(--red);font-style:normal}.vehicle{text-align:right;display:flex;flex-direction:column;gap:9px;font-size:9px;color:#81858d;letter-spacing:1.3px}.vehicle-code{font-size:18px;font-weight:700;color:#c5c8ce;letter-spacing:3px}.vehicle b{color:var(--red);margin:0 6px}.dashboard{border:1px solid #36373b;border-top:2px solid #4b3034;border-radius:12px;background:linear-gradient(125deg,#1b1c20,#141518 70%);box-shadow:0 20px 60px #0005,inset 0 1px 0 #ffffff05;overflow:hidden}.cluster-top{display:flex;justify-content:space-between;padding:21px 25px;font-size:9px;letter-spacing:1.5px;color:#9b9ea6;border-bottom:1px solid #ffffff06}.cluster-top>span:first-child{color:var(--red);font-weight:bold}.cluster-top i{display:inline-block;width:14px;height:6px;background:var(--red);transform:skew(-28deg);margin-right:8px}.cluster-top #engine-status{color:#8a8e96}.cluster-top #engine-status.running{color:var(--green)}.temperature{color:#5e626b}.instruments{display:grid;grid-template-columns:1fr 1.25fr .58fr;align-items:center;gap:12px;padding:15px 25px 27px}.instrument-label{display:flex;justify-content:space-between;font-size:8px;letter-spacing:1.5px;color:#9a9da6;margin:6px 13px 0}.instrument-label span{color:#5b6069}.tachometer{position:relative;width:100%;max-width:360px;margin:auto}.tachometer svg{display:block;width:100%}.rpm-center{position:absolute;top:52%;left:50%;transform:translate(-50%,-50%);text-align:center}.rpm-center span{display:block;font-size:37px;letter-spacing:-1px;font-variant-numeric:tabular-nums;font-weight:600}.rpm-center small{font-size:9px;color:#7c8089;letter-spacing:3px;display:block;margin-top:8px}.redline-label{position:absolute;bottom:11%;width:100%;text-align:center;font-size:7px;letter-spacing:1.5px;color:#b25960}.rpm-footer{display:flex;gap:12px;align-items:center;margin:0 15px;font-size:7px;letter-spacing:1px;color:#7a7f88}.rpm-footer b{color:#babec6;width:30px}.load-track{height:3px;flex:1;background:#303139}.load-track div{height:100%;background:var(--red);width:0;box-shadow:0 0 8px #ff3a4255}.speed-instrument{align-self:center;text-align:center}.shift-lights{display:flex;justify-content:center;gap:6px;margin:10px 0 8px}.shift-light{height:5px;width:19px;background:#303138;border-radius:2px;transition:background .08s,box-shadow .08s}.shift-light.lit{background:var(--light);box-shadow:0 0 12px var(--light)}.speed-dial{position:relative}.speed-dial svg{width:100%;display:block}.speed-display{position:absolute;top:34%;left:0;width:100%;display:flex;align-items:center;flex-direction:column}.speed-caption{font-size:8px;letter-spacing:2px;color:#787d86}.speed-display strong{font-size:clamp(65px,8vw,112px);letter-spacing:-7px;line-height:1.14;font-weight:700;font-variant-numeric:tabular-nums;text-shadow:0 0 30px #ffffff0a;padding-right:7px}.speed-unit{font-size:10px;letter-spacing:4px;color:#999da6;margin-top:7px}.drive-state{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:-34px;position:relative}.gear-caption{font-size:7px;letter-spacing:1.5px;color:#737985}.drive-state strong{font-size:33px;line-height:40px;width:42px;border:1px solid #ff3a4266;border-radius:5px;color:var(--red);background:#ff3a4209}.drive-state>span:last-child{font-size:8px;color:#a4a8b1;letter-spacing:1px;min-width:44px;text-align:left}.telemetry{border-left:1px solid #303138;padding:5px 0 0 22px;margin-left:7px}.telemetry-heading{font-size:8px;letter-spacing:1.2px;color:#a3a7af;display:flex;justify-content:space-between;margin-bottom:24px}.telemetry-heading>span{color:var(--red);font-size:15px}.data-row{padding-bottom:19px;margin-bottom:18px;border-bottom:1px solid #2c2e34}.data-row>span{display:block;font-size:7px;letter-spacing:1px;color:#737985;margin-bottom:11px}.data-row strong{display:block;font-size:17px;font-weight:400;letter-spacing:1px}.data-row strong b{font-weight:400;font-variant-numeric:tabular-nums}.data-row strong small{font-size:8px;color:#737985}.mini-bars{display:flex;gap:3px;margin-top:12px}.mini-bars i{width:7px;height:10px;background:#32353b;transform:skew(-20deg)}.mini-bars i.active{background:var(--red)}.traction{display:flex;align-items:center;gap:8px;font-size:7px;letter-spacing:.5px;color:#a5a9b2}.traction-icon{font-size:22px;color:var(--green)}.traction small{display:block;font-size:6px;color:#606772;margin-top:5px}.traction .green-dot{margin-left:auto;width:4px;height:4px}.cluster-bottom{border-top:1px solid #2c2e34;display:flex;justify-content:space-between;padding:17px 25px;color:#717783;font-size:7px;letter-spacing:1.4px;background:#11121566}.cluster-bottom .green-dot{margin-right:8px;width:4px;height:4px}.cluster-bottom b{color:#b4b8c1}.control-deck{display:flex;align-items:center;gap:32px;padding:28px 0 22px}.engine-control{text-align:center}.engine-button{display:flex;align-items:center;gap:15px;padding:18px 24px;background:linear-gradient(#ff434b,#e42530);border:1px solid #ff6268;border-radius:6px;color:white;font-size:10px;letter-spacing:1px;font-weight:bold;box-shadow:0 5px 24px #e425301f;min-width:202px;justify-content:center}.power-symbol{font-size:22px;line-height:18px}.engine-button[aria-pressed=true]{background:#26292e;border-color:#4b4e55}.control-note{font-size:6px;letter-spacing:1.5px;display:block;color:#696e78;margin-top:10px}.selector-control{border-left:1px solid #32343b;padding-left:30px;display:flex;align-items:center;gap:18px}.control-title{font-size:8px;color:#838994;letter-spacing:1.2px;max-width:65px;line-height:1.8}.selector{display:flex;gap:7px}.selector button{width:45px;height:46px;background:#1b1d22;border:1px solid #383b42;border-radius:5px;color:#8a909b;font-size:16px}.selector button.selected{border-color:var(--red);color:var(--red);background:#ff3a4210;box-shadow:0 0 15px #ff3a4208}.selector button span{display:block;font-size:5px;letter-spacing:1px;margin-top:2px}.pedals{margin-left:auto;display:flex;gap:10px}.pedal{border:1px solid #393d45;background:#1a1c21;color:#b3b8c1;border-radius:5px;padding:11px 22px;min-width:125px;font-size:7px;letter-spacing:1.3px;touch-action:none;user-select:none}.pedal span{display:block;font-size:14px;margin-bottom:8px;color:#e2e5ea}.pedal b{color:#555c68;font-weight:400;margin:0 5px}.pedal.active{background:#ff3a4218;border-color:var(--red);color:var(--red)}.brake.active{border-color:#e9b26c;background:#e9b26c15;color:#e9b26c}.help-line{display:flex;justify-content:space-between;gap:20px;font-size:9px;color:#9298a4;line-height:1.6}.keyboard-hint{font-size:7px;letter-spacing:1px;white-space:nowrap;color:#646c79}.keyboard-hint i{color:var(--red);margin:0 9px;font-style:normal}footer{display:flex;justify-content:space-between;margin-top:38px;padding-top:19px;border-top:1px solid #2a2d33;font-size:7px;letter-spacing:1.4px;color:#606874}footer b{color:var(--red);margin:0 6px}.footer-red{color:#a0a6b0;margin-left:6px}svg text{font-family:Arial,Helvetica,sans-serif}svg .needle{filter:drop-shadow(0 0 4px #ff3a4260)}
+@media(min-width:1500px){.cockpit{padding-top:55px}.intro{padding-top:50px}.instruments{padding-top:30px;padding-bottom:40px}}
+@media(max-width:1050px){.cockpit{padding:25px}.instruments{grid-template-columns:1fr 1.25fr}.telemetry{grid-column:1/-1;border-left:0;border-top:1px solid #303138;margin:10px 0 0;padding:20px 0 0;display:flex;align-items:center;gap:25px}.telemetry-heading{margin:0}.data-row{margin:0;border:0;padding:0;flex:1}.data-row>span{margin-bottom:7px}.mini-bars{display:none}.traction{margin-left:auto}.selector-control{padding-left:20px;gap:12px}.control-deck{gap:20px}.pedal{min-width:105px;padding:11px 15px}.engine-button{min-width:180px;padding:18px}.temperature{display:none}.session{font-size:8px;letter-spacing:1px}}
+@media(max-width:740px){.cockpit{padding:20px 16px}.topbar{padding-bottom:20px}.session{display:none}.intro{padding:28px 0 24px}h1{font-size:28px}.eyebrow{font-size:7px;letter-spacing:1px}.eyebrow span{display:none}.vehicle{font-size:6px;letter-spacing:.5px}.vehicle-code{font-size:15px}.instruments{padding:12px;gap:0}.instrument-label{font-size:6px;letter-spacing:.5px;margin:12px 4px 0}.rpm-center span{font-size:24px}.rpm-center small{font-size:6px;margin-top:4px}.redline-label{font-size:5px;letter-spacing:.6px}.rpm-footer{margin:0 4px;font-size:5px;gap:5px}.shift-light{width:11px;height:4px}.shift-lights{gap:4px}.speed-caption{font-size:6px;letter-spacing:1px}.speed-display strong{font-size:65px;letter-spacing:-4px}.speed-unit{font-size:7px;margin-top:2px;letter-spacing:2px}.drive-state{gap:7px;margin-top:10px}.gear-caption{display:none}.drive-state strong{font-size:23px;line-height:30px;width:32px}.drive-state>span:last-child{font-size:6px;min-width:30px}.telemetry{gap:10px;padding:17px 5px 5px}.telemetry-heading{display:none}.data-row>span{font-size:6px}.data-row strong{font-size:13px}.traction{font-size:6px}.traction small{font-size:5px}.traction-icon{display:none}.cluster-top{font-size:7px;padding:16px}.cluster-bottom{font-size:5px;letter-spacing:.6px;padding:14px 16px}.control-deck{flex-wrap:wrap;gap:17px;padding-top:22px}.engine-control{flex:1}.engine-button{width:100%;min-width:0;font-size:8px;gap:10px}.selector-control{border-left:0;padding:0;gap:10px}.control-title{font-size:6px;max-width:45px}.selector button{width:37px}.pedals{width:100%;margin:0}.pedal{flex:1;min-height:65px}.help-line{font-size:8px}.keyboard-hint{display:none}footer{font-size:5px;letter-spacing:.7px;margin-top:26px;gap:10px}}
+@media(prefers-reduced-motion:reduce){.shift-light{transition:none}}
+
+</style>
+  
+</head>
+<body>
+  <main class="cockpit">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Apex dashboard"><span class="brand-mark">///</span> APEX<span class="brand-sub">PERFORMANCE SYSTEMS</span></a>
+      <div class="session"><span class="live-dot"></span> LIVE SIMULATION <span class="session-line"></span> <span>TRACK MODE</span></div>
+      <button id="mute" class="sound-button" aria-pressed="true">SOUND OFF <span>◖))</span></button>
+    </header>
+
+    <section class="intro">
+      <div><p class="eyebrow">DRIVER INSTRUMENT CLUSTER <span>01 / 06</span></p><h1>Built for the <em>redline.</em></h1></div>
+      <div class="vehicle"><span class="vehicle-code">APX–06</span><span>V8 BITURBO <b> / </b> 6-SPEED AUTO</span></div>
+    </section>
+
+    <section class="dashboard" aria-label="Live vehicle instruments">
+      <div class="cluster-top"><span><i></i> SPORT PLUS</span><span id="engine-status" role="status">ENGINE OFF</span><span class="temperature">SIMULATED TELEMETRY</span></div>
+      <div class="instruments">
+        <section class="rpm-instrument" aria-label="Engine RPM">
+          <div class="instrument-label">ENGINE SPEED <span>RPM × 1000</span></div>
+          <div class="tachometer">
+            <svg id="rpm-dial" viewBox="0 0 360 360" aria-hidden="true"></svg>
+            <div class="rpm-center"><span id="rpm-value">0</span><small>RPM</small></div>
+            <div class="redline-label">REDLINE / 7000</div>
+          </div>
+          <div class="rpm-footer"><span>ENGINE LOAD</span><div class="load-track"><div id="load-bar"></div></div><b id="load-value">0%</b></div>
+        </section>
+
+        <section class="speed-instrument" aria-label="Vehicle speed">
+          <div class="shift-lights" id="shift-lights" aria-label="Shift lights"></div>
+          <div class="speed-dial"><svg id="speed-dial" viewBox="0 0 480 350" aria-hidden="true"></svg><div class="speed-display"><span class="speed-caption">GROUND SPEED</span><strong id="speed-value">0</strong><span class="speed-unit">MPH</span></div></div>
+          <div class="drive-state"><span class="gear-caption">TRANSMISSION</span><strong id="gear-value">P</strong><span id="drive-label">PARK</span></div>
+        </section>
+
+        <aside class="telemetry">
+          <div class="telemetry-heading">VEHICLE DATA <span>↗</span></div>
+          <div class="data-row"><span>POWERTRAIN</span><strong id="powertrain">STANDBY</strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="data-row"><span>DISTANCE</span><strong><b id="distance-value">0.00</b> <small>MI</small></strong></div>
+          <div class="data-row"><span>SESSION TOP SPEED</span><strong><b id="top-speed">0</b> <small>MPH</small></strong></div>
+          <div class="traction"><span class="traction-icon">⌁</span><div>TRACTION CONTROL<small>ACTIVE / ROAD GRIP 100%</small></div><span class="green-dot"></span></div>
+        </aside>
+      </div>
+      <div class="cluster-bottom"><span><i class="green-dot"></i> SYSTEMS NOMINAL</span><span id="motion-status">READY WHEN YOU ARE</span><span>APEX OS <b>2.4</b></span></div>
+    </section>
+
+    <section class="control-deck" aria-label="Driving controls">
+      <div class="engine-control"><button id="engine-button" class="engine-button" aria-pressed="false"><span class="power-symbol">⏻</span><span id="engine-button-label">START ENGINE</span></button><span class="control-note">IGNITION / POWER</span></div>
+      <div class="selector-control"><span class="control-title">DRIVE SELECTOR</span><div class="selector" role="group" aria-label="Transmission mode"><button data-mode="P" class="selected" aria-pressed="true">P</button><button data-mode="N" aria-pressed="false">N</button><button data-mode="D" aria-pressed="false">D<span>AUTO</span></button></div></div>
+      <div class="pedals"><button id="brake" class="pedal brake"><span>S <b>/</b> ↓</span>BRAKE</button><button id="accelerator" class="pedal accelerator"><span>W <b>/</b> ↑</span>ACCELERATE</button></div>
+    </section>
+    <div class="help-line"><span id="message" role="status">Start the engine, then hold W or ↑ to engage Drive and accelerate.</span><span class="keyboard-hint">HOLD TO DRIVE <i>•</i> RELEASE TO COAST</span></div>
+    <footer><span>APEX <b>/</b> VIRTUAL PERFORMANCE LAB</span><span>A SIMULATION. A FEELING. <span class="footer-red">FULL THROTTLE.</span></span></footer>
+  </main>
+<script>
+'use strict';
+
+// All physics use seconds and MPH. No timers drive the simulation.
+const state = { engine: false, mode: 'P', gear: 1, speed: 0, rpm: 0,
+  distance: 0, topSpeed: 0, shiftCooldown: 0, muted: true };
+const limits = { speed: 200, rpm: 8000, idle: 850, redline: 7000 };
+const ratios = [0, 190, 125, 87, 65, 49, 36]; // RPM per MPH in each gear
+const driveForce = [0, 23, 18, 14, 11, 8, 6.5];
+const keys = new Set();
+const pointers = { throttle: new Set(), brake: new Set() };
+const el = id => document.getElementById(id);
+const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
+let audio = null;
+let previousTime = null;
+
+// Build vector instruments once; animate only their needles and progress rings.
+const svgNS = 'http://www.w3.org/2000/svg';
+function svgElement(tag, attributes, parent, content) {
+  const element = document.createElementNS(svgNS, tag);
+  Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+  if (content !== undefined) element.textContent = content;
+  parent.append(element);
+  return element;
+}
+function point(cx, cy, radius, angle) {
+  const radians = angle * Math.PI / 180;
+  return { x: cx + Math.sin(radians) * radius, y: cy - Math.cos(radians) * radius };
+}
+function arc(cx, cy, radius, start, end) {
+  const a = point(cx, cy, radius, start), b = point(cx, cy, radius, end);
+  return `M ${a.x} ${a.y} A ${radius} ${radius} 0 ${end - start > 180 ? 1 : 0} 1 ${b.x} ${b.y}`;
+}
+function buildDial(id, cx, cy, radius, max, step, start, end, redline) {
+  const svg = el(id);
+  svgElement('path', { d: arc(cx, cy, radius, start, end), fill: 'none', stroke: '#292c33', 'stroke-width': 5 }, svg);
+  svgElement('path', { d: arc(cx, cy, radius - 13, start, end), fill: 'none', stroke: '#25282f', 'stroke-width': 1 }, svg);
+  if (redline) svgElement('path', { d: arc(cx, cy, radius, start + (end-start)*redline/max, end), fill: 'none', stroke: '#ff3a42', 'stroke-width': 5 }, svg);
+  const progress = svgElement('path', { d: arc(cx, cy, radius, start, end), fill: 'none', stroke: '#ff3a42', 'stroke-width': 3, pathLength: 100, 'stroke-dasharray': '0 100', opacity: .85 }, svg);
+  for (let value = 0; value <= max; value += step / 5) {
+    const angle = start + value / max * (end - start);
+    const major = Math.round(value / (step / 5)) % 5 === 0;
+    const outer = point(cx, cy, radius - 19, angle), inner = point(cx, cy, radius - (major ? 31 : 25), angle);
+    svgElement('line', { x1: inner.x, y1: inner.y, x2: outer.x, y2: outer.y, stroke: redline && value >= redline ? '#ff5960' : major ? '#9a9faa' : '#444952', 'stroke-width': major ? 2 : 1 }, svg);
+    if (major) {
+      const label = point(cx, cy, radius - 48, angle);
+      svgElement('text', { x: label.x, y: label.y + 4, fill: redline && value >= redline ? '#ff5960' : '#a7adb8', 'text-anchor': 'middle', 'font-size': id === 'rpm-dial' ? 12 : 11 }, svg, redline ? value / 1000 : value);
+    }
+  }
+  // Short perimeter needles leave the digital readouts unobstructed.
+  const needle = svgElement('g', { class: 'needle' }, svg);
+  svgElement('path', { d: `M ${cx-3} ${cy-radius+11} L ${cx} ${cy-radius+52} L ${cx+3} ${cy-radius+11} Z`, fill: '#ff444c' }, needle);
+  return { update(value) {
+    const fraction = clamp(value / max, 0, 1);
+    needle.setAttribute('transform', `rotate(${start + fraction*(end-start)} ${cx} ${cy})`);
+    progress.setAttribute('stroke-dasharray', `${fraction*100} 100`);
+  } };
+}
+const rpmDial = buildDial('rpm-dial', 180, 180, 157, 8000, 1000, -130, 130, 7000);
+const speedDial = buildDial('speed-dial', 240, 245, 214, 200, 20, -110, 110, 0);
+const lights = Array.from({ length: 10 }, (_, index) => {
+  const light = document.createElement('span');
+  light.className = 'shift-light';
+  light.style.setProperty('--light', index < 5 ? '#89dfb0' : index < 8 ? '#f9c369' : '#ff3a42');
+  el('shift-lights').append(light);
+  return light;
+});
+
+function message(text) { el('message').textContent = text; }
+function setMode(mode) {
+  if (mode === 'P' && state.speed > 0.5) {
+    message('Park is locked while moving. Brake to a complete stop first.');
+    return false;
+  }
+  if (mode === 'D' && !state.engine) {
+    message('Start the engine before selecting Drive.');
+    return false;
+  }
+  state.mode = mode;
+  if (mode === 'P') state.speed = 0;
+  if (mode === 'D') {
+    // Match a safe gear to road speed when re-engaging from Neutral.
+    state.gear = 1;
+    while (state.gear < 6 && state.speed * ratios[state.gear] > 5800) state.gear++;
+    state.shiftCooldown = .25;
+  }
+  message(mode === 'P' ? 'Park engaged. Hold W or ↑ to automatically select Drive.' : mode === 'N' ? 'Neutral engaged. Select D to reconnect the transmission; throttle is disabled.' : 'Drive engaged. Hold W or ↑ to accelerate. Hold S or ↓ to brake.');
+  render();
+  return true;
+}
+function prepareThrottle() {
+  if (!state.engine) message('Ignition off. Start the engine before accelerating.');
+  else if (state.mode === 'P') setMode('D');
+  else if (state.mode === 'N') message('Neutral prevents acceleration. Select D to engage Drive.');
+}
+function toggleEngine() {
+  state.engine = !state.engine;
+  state.shiftCooldown = 0;
+  if (!state.engine) {
+    clearInputs();
+    message(state.speed > .5 ? 'Engine off. Vehicle is coasting; brakes remain available.' : 'Engine off. Start the engine to drive again.');
+  } else message(state.mode === 'N' ? 'Engine running in Neutral. Select D to drive.' : 'Engine running. Hold W or ↑ to accelerate, or select D.');
+  if (!state.muted) ensureAudio();
+  render();
+}
+function throttlePressed() { return keys.has('w') || keys.has('arrowup') || pointers.throttle.size > 0; }
+function brakePressed() { return keys.has('s') || keys.has('arrowdown') || pointers.brake.size > 0; }
+function clearInputs() { keys.clear(); pointers.throttle.clear(); pointers.brake.clear(); }
+
+function simulate(dt) {
+  const brake = brakePressed();
+  const throttle = throttlePressed() && !brake && state.engine && state.mode === 'D';
+  state.shiftCooldown = Math.max(0, state.shiftCooldown - dt);
+  if (state.mode === 'P') state.speed = 0;
+  else {
+    const roadDrag = state.speed > 0 ? .35 + .00011 * state.speed ** 2 : 0;
+    const engineBraking = state.engine && state.mode === 'D' && !throttle && state.speed > 0 ? .55 + .012 * state.speed : 0;
+    const torqueFade = clamp((limits.rpm - state.speed * ratios[state.gear]) / 1600, 0, 1);
+    const acceleration = throttle ? driveForce[state.gear] * torqueFade * (state.shiftCooldown > .22 ? .28 : 1) : 0;
+    state.speed = clamp(state.speed + (acceleration - roadDrag - engineBraking - (brake ? 34 : 0)) * dt, 0, limits.speed);
+  }
+  if (state.engine && state.mode === 'D' && !state.shiftCooldown) {
+    const coupledRPM = state.speed * ratios[state.gear];
+    if (state.gear < 6 && coupledRPM > 7050) { state.gear++; state.shiftCooldown = .42; }
+    else if (state.gear > 1 && coupledRPM < (throttle ? 2800 : 1900) && state.speed * ratios[state.gear-1] < 6200) { state.gear--; state.shiftCooldown = .32; }
+  }
+  const targetRPM = !state.engine ? 0 : state.mode === 'D' ? clamp(Math.max(limits.idle, state.speed * ratios[state.gear] + (throttle && state.speed < 12 ? 900 * (1-state.speed/12) : 0)), limits.idle, limits.rpm) : limits.idle;
+  state.rpm = clamp(state.rpm + (targetRPM - state.rpm) * (1-Math.exp(-dt*10)), 0, limits.rpm);
+  if (!state.engine && state.rpm < 1) state.rpm = 0;
+  state.distance += state.speed * dt / 3600;
+  state.topSpeed = Math.max(state.topSpeed, state.speed);
+  updateAudio(throttle);
+}
+
+function render() {
+  const throttle = throttlePressed() && state.engine && state.mode === 'D' && !brakePressed();
+  el('speed-value').textContent = Math.round(state.speed);
+  el('rpm-value').textContent = Math.round(state.rpm / 10) * 10;
+  el('gear-value').textContent = state.mode === 'D' ? state.gear : state.mode;
+  el('drive-label').textContent = state.mode === 'D' ? 'AUTO' : state.mode === 'P' ? 'PARK' : 'NEUTRAL';
+  el('engine-status').textContent = state.engine ? 'ENGINE RUNNING' : 'ENGINE OFF';
+  el('engine-status').classList.toggle('running', state.engine);
+  el('engine-button').setAttribute('aria-pressed', state.engine);
+  el('engine-button-label').textContent = state.engine ? 'STOP ENGINE' : 'START ENGINE';
+  el('powertrain').textContent = state.engine ? throttle ? 'FULL LOAD' : 'ONLINE' : 'STANDBY';
+  el('motion-status').textContent = brakePressed() ? 'BRAKING' : throttle ? 'ACCELERATING' : state.speed > .5 ? 'COASTING' : state.engine ? 'AWAITING THROTTLE' : 'READY WHEN YOU ARE';
+  const load = !state.engine ? 0 : throttle ? 100 : 8;
+  el('load-bar').style.width = `${load}%`;
+  el('load-value').textContent = `${load}%`;
+  el('distance-value').textContent = state.distance.toFixed(2);
+  el('top-speed').textContent = Math.round(state.topSpeed);
+  el('accelerator').classList.toggle('active', throttlePressed());
+  el('brake').classList.toggle('active', brakePressed());
+  document.querySelectorAll('[data-mode]').forEach(button => {
+    const selected = button.dataset.mode === state.mode;
+    button.classList.toggle('selected', selected);
+    button.setAttribute('aria-pressed', selected);
+  });
+  document.querySelectorAll('.mini-bars i').forEach((bar, i) => bar.classList.toggle('active', i < load / 10));
+  lights.forEach((light, i) => light.classList.toggle('lit', state.engine && state.rpm >= 4500 + i * 275));
+  rpmDial.update(state.rpm);
+  speedDial.update(state.speed);
+}
+
+// Audio is synthesized locally and created only by an explicit user gesture.
+function ensureAudio() {
+  try {
+    if (!audio) {
+      const Context = window.AudioContext || window.webkitAudioContext;
+      if (!Context) throw new Error('Web Audio unavailable');
+      const context = new Context();
+      const filter = context.createBiquadFilter();
+      filter.type = 'lowpass'; filter.frequency.value = 500;
+      const gain = context.createGain(); gain.gain.value = 0;
+      filter.connect(gain); gain.connect(context.destination);
+      const oscillators = [1, 2.01, .5].map((multiplier, index) => {
+        const oscillator = context.createOscillator();
+        oscillator.type = index === 2 ? 'sine' : 'sawtooth';
+        oscillator.frequency.value = 40 * multiplier;
+        oscillator.connect(filter); oscillator.start();
+        return { oscillator, multiplier };
+      });
+      audio = { context, filter, gain, oscillators };
+    }
+    audio.context.resume().catch(audioUnavailable);
+  } catch { audioUnavailable(); }
+}
+function audioUnavailable() {
+  state.muted = true;
+  updateMuteButton();
+  message('Engine audio is unavailable in this browser. Driving controls remain active.');
+}
+function updateMuteButton() {
+  el('mute').setAttribute('aria-pressed', state.muted);
+  el('mute').innerHTML = `${state.muted ? 'SOUND OFF' : 'SOUND ON'} <span>◖))</span>`;
+}
+function updateAudio(throttle) {
+  if (!audio) return;
+  const now = audio.context.currentTime;
+  const audible = state.engine && !state.muted && !document.hidden;
+  audio.gain.gain.setTargetAtTime(audible ? (throttle ? .035 : .018) : 0, now, .06);
+  audio.filter.frequency.setTargetAtTime(180 + state.rpm * .12, now, .08);
+  audio.oscillators.forEach(({ oscillator, multiplier }) => oscillator.frequency.setTargetAtTime(Math.max(20, state.rpm / 30) * multiplier, now, .05));
+}
+
+el('engine-button').addEventListener('click', toggleEngine);
+el('mute').addEventListener('click', () => { state.muted = !state.muted; updateMuteButton(); if (!state.muted) ensureAudio(); });
+document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => setMode(button.dataset.mode)));
+window.addEventListener('keydown', event => {
+  const key = event.key.toLowerCase();
+  if (!['w', 's', 'arrowup', 'arrowdown'].includes(key) || event.ctrlKey || event.metaKey || event.altKey) return;
+  event.preventDefault();
+  if (!keys.has(key) && (key === 'w' || key === 'arrowup')) prepareThrottle();
+  keys.add(key);
+});
+window.addEventListener('keyup', event => keys.delete(event.key.toLowerCase()));
+function bindPedal(id, input) {
+  const button = el(id);
+  button.addEventListener('pointerdown', event => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    button.setPointerCapture(event.pointerId);
+    if (input === 'throttle') prepareThrottle();
+    pointers[input].add(event.pointerId);
+  });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => button.addEventListener(type, event => pointers[input].delete(event.pointerId)));
+  // Space and Enter also operate focused pedals for keyboard accessibility.
+  button.addEventListener('keydown', event => {
+    if (![' ', 'Enter'].includes(event.key)) return;
+    event.preventDefault();
+    if (input === 'throttle' && !pointers[input].has('keyboard')) prepareThrottle();
+    pointers[input].add('keyboard');
+  });
+  button.addEventListener('keyup', event => { if ([' ', 'Enter'].includes(event.key)) pointers[input].delete('keyboard'); });
+  button.addEventListener('blur', () => pointers[input].delete('keyboard'));
+}
+bindPedal('accelerator', 'throttle');
+bindPedal('brake', 'brake');
+window.addEventListener('blur', clearInputs);
+document.addEventListener('visibilitychange', () => {
+  clearInputs(); previousTime = null;
+  if (document.hidden && audio) audio.gain.gain.setTargetAtTime(0, audio.context.currentTime, .03);
+});
+function frame(time) {
+  // Bound catch-up after interruptions and substep physics for consistent shifts.
+  let remaining = previousTime === null || document.hidden ? 0 : clamp((time-previousTime)/1000, 0, .1);
+  previousTime = time;
+  while (remaining > 0) { const dt = Math.min(remaining, 1/120); simulate(dt); remaining -= dt; }
+  render();
+  requestAnimationFrame(frame);
+}
+render();
+requestAnimationFrame(frame);
+
+</script>
+</body>
+</html>
