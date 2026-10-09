@@ -47,3 +47,17 @@ Use **Export CSV** to get a correctly formatted template. Import adds transactio
 - `index.html`: UI structure
 - `style.css`: responsive design and themes
 - `script.js`: calculations, state, interactions, charts, CSV and local persistence
+
+## Install on iPhone (PWA)
+
+1. In GitHub, open **Settings → Pages** for this repository.
+2. Under **Build and deployment**, choose **Deploy from a branch**, select **main** and **/(root)**, then save. GitHub Pages publishes the repository root.
+3. After deployment, open **https://lxvyrz.github.io/nikita-labs/personal-money-tracker/** in **Safari on your iPhone**.
+4. Tap **Share → Add to Home Screen**, choose **Open as Web App** if shown, then tap **Add**.
+5. Launch **Vault** from your Home Screen. Open it online once so the service worker can cache files for offline use.
+
+GitHub Pages may take several minutes to deploy. The repository must be eligible for GitHub Pages on your plan.
+
+**Privacy and backup:** GitHub Pages serves only the app's code; it does not publish your transactions. Your data is kept in localStorage on that iPhone/browser, not synced with your PC. iOS may clear website data in some circumstances, so export CSV backups. CSV export includes transactions only, not goals, budgets or recurring settings.
+
+**Offline:** The app shell is cached after the first successful online load. If the device has never loaded the published app online, offline mode will not work. App updates require a subsequent online visit.
