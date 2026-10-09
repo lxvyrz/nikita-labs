@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101113">
+  <title>Apex / Racing Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="cockpit">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Apex dashboard"><span class="brand-mark">///</span> APEX<span class="brand-sub">PERFORMANCE SYSTEMS</span></a>
+      <div class="session"><span class="live-dot"></span> LIVE SIMULATION <span class="session-line"></span> <span>TRACK MODE</span></div>
+      <button id="mute" class="sound-button" aria-pressed="true">SOUND OFF <span>◖))</span></button>
+    </header>
+
+    <section class="intro">
+      <div><p class="eyebrow">DRIVER INSTRUMENT CLUSTER <span>01 / 06</span></p><h1>Built for the <em>redline.</em></h1></div>
+      <div class="vehicle"><span class="vehicle-code">APX–06</span><span>V8 BITURBO <b> / </b> 6-SPEED AUTO</span></div>
+    </section>
+
+    <section class="dashboard" aria-label="Live vehicle instruments">
+      <div class="cluster-top"><span><i></i> SPORT PLUS</span><span id="engine-status" role="status">ENGINE OFF</span><span class="temperature">SIMULATED TELEMETRY</span></div>
+      <div class="instruments">
+        <section class="rpm-instrument" aria-label="Engine RPM">
+          <div class="instrument-label">ENGINE SPEED <span>RPM × 1000</span></div>
+          <div class="tachometer">
+            <svg id="rpm-dial" viewBox="0 0 360 360" aria-hidden="true"></svg>
+            <div class="rpm-center"><span id="rpm-value">0</span><small>RPM</small></div>
+            <div class="redline-label">REDLINE / 7000</div>
+          </div>
+          <div class="rpm-footer"><span>ENGINE LOAD</span><div class="load-track"><div id="load-bar"></div></div><b id="load-value">0%</b></div>
+        </section>
+
+        <section class="speed-instrument" aria-label="Vehicle speed">
+          <div class="shift-lights" id="shift-lights" aria-label="Shift lights"></div>
+          <div class="speed-dial"><svg id="speed-dial" viewBox="0 0 480 350" aria-hidden="true"></svg><div class="speed-display"><span class="speed-caption">GROUND SPEED</span><strong id="speed-value">0</strong><span class="speed-unit">MPH</span></div></div>
+          <div class="drive-state"><span class="gear-caption">TRANSMISSION</span><strong id="gear-value">P</strong><span id="drive-label">PARK</span></div>
+        </section>
+
+        <aside class="telemetry">
+          <div class="telemetry-heading">VEHICLE DATA <span>↗</span></div>
+          <div class="data-row"><span>POWERTRAIN</span><strong id="powertrain">STANDBY</strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="data-row"><span>DISTANCE</span><strong><b id="distance-value">0.00</b> <small>MI</small></strong></div>
+          <div class="data-row"><span>SESSION TOP SPEED</span><strong><b id="top-speed">0</b> <small>MPH</small></strong></div>
+          <div class="traction"><span class="traction-icon">⌁</span><div>TRACTION CONTROL<small>ACTIVE / ROAD GRIP 100%</small></div><span class="green-dot"></span></div>
+        </aside>
+      </div>
+      <div class="cluster-bottom"><span><i class="green-dot"></i> SYSTEMS NOMINAL</span><span id="motion-status">READY WHEN YOU ARE</span><span>APEX OS <b>2.4</b></span></div>
+    </section>
+
+    <section class="control-deck" aria-label="Driving controls">
+      <div class="engine-control"><button id="engine-button" class="engine-button" aria-pressed="false"><span class="power-symbol">⏻</span><span id="engine-button-label">START ENGINE</span></button><span class="control-note">IGNITION / POWER</span></div>
+      <div class="selector-control"><span class="control-title">DRIVE SELECTOR</span><div class="selector" role="group" aria-label="Transmission mode"><button data-mode="P" class="selected" aria-pressed="true">P</button><button data-mode="N" aria-pressed="false">N</button><button data-mode="D" aria-pressed="false">D<span>AUTO</span></button></div></div>
+      <div class="pedals"><button id="brake" class="pedal brake"><span>S <b>/</b> ↓</span>BRAKE</button><button id="accelerator" class="pedal accelerator"><span>W <b>/</b> ↑</span>ACCELERATE</button></div>
+    </section>
+    <div class="help-line"><span id="message" role="status">Start the engine, then hold W or ↑ to engage Drive and accelerate.</span><span class="keyboard-hint">HOLD TO DRIVE <i>•</i> RELEASE TO COAST</span></div>
+    <footer><span>APEX <b>/</b> VIRTUAL PERFORMANCE LAB</span><span>A SIMULATION. A FEELING. <span class="footer-red">FULL THROTTLE.</span></span></footer>
+  </main>
+</body>
+</html>
